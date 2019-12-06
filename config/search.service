@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn instance to serve search service of MYSpace
+After=network.target
+
+[Service]
+User=ubuntu
+Group=root
+WorkingDirectory=/home/ubuntu/repo
+ExecStart=/home/ubuntu/venvs/search-service/bin/gunicorn -c config/gunicorn.conf.py wsgi:app
+ExecReload = /bin/kill -s HUP $MAINPID
+ExecStop = /bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target
